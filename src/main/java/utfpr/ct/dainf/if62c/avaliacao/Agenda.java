@@ -47,7 +47,8 @@ public class Agenda {
         Aviso aviso = new Aviso(compromisso);
         compromisso.registraAviso(aviso);
         atual.setTime(System.currentTimeMillis());
-        timer.schedule(aviso, compromisso.getData().getTime() - atual.getTime() - 1000*ant, period*1000);
+        timer.schedule(aviso, compromisso.getData().getTime() - atual.getTime()
+                       - 1000*antecedencia, intervalo*1000);
     }
     
     public void cancela(Compromisso compromisso) {
