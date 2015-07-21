@@ -13,13 +13,13 @@ public class Aviso extends TimerTask {
 
     public Aviso(Compromisso compromisso) {
        this.compromisso = compromisso;
-       
-        @Override
-            public void run() {
-                int tempo = (int)(compromisso.getData().getTime() - System.currentTimeMillis())/1000;
-                System.out.println(compromisso.getDescricao() + " começa em " + tempo + "s");
-            }
+    }  
+    @Override
+        public void run() {
+            int tempo = (int)(compromisso.getData().getTime() - System.currentTimeMillis())/1000;
+            System.out.println(compromisso.getDescricao() + " começa em " + tempo + "s");
+        }
     
-    }
+    
         
 }
