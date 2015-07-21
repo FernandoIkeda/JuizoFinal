@@ -1,6 +1,5 @@
 package utfpr.ct.dainf.if62c.avaliacao;
 
-import java.util.TimerTask;
 
 /**
  * IF62C Fundamentos de Programação 2
