@@ -13,6 +13,7 @@ public class Agenda {
     private final String descricao;
     private final List<Compromisso> compromissos = new ArrayList<>();
     private final Timer timer;
+    private final Date atual = new Date();
 
     public Agenda(String descricao) {
         this.descricao = descricao;
@@ -31,30 +32,45 @@ public class Agenda {
         compromissos.add(compromisso);
         Aviso aviso = new AvisoFinal(compromisso);
         compromisso.registraAviso(aviso);
-        // com a classe Aviso devidamente implementada, o erro de compilação
-        // deverá desaparecer
         timer.schedule(aviso, compromisso.getData());
     }
     
     public void novoAviso(Compromisso compromisso, int antecedencia) {
-        long tempo = antecedencia;
-        timer.schedule(new Aviso(compromisso), tempo);
+        Aviso aviso = new Aviso(compromisso);
+        compromisso.registraAviso(aviso);
+        atual.setTime(System.currentTimeMillis());
+        timer.schedule(aviso, compromisso.getData().getTime() - atual.getTime() - 1000*antecedencia);
     }
     
     public void novoAviso(Compromisso compromisso, int antecedencia, int intervalo) {
-        long tempo = antecedencia;
-        timer.schedule(new Aviso(compromisso), tempo, intervalo);
+        Aviso aviso = new Aviso(compromisso);
+        compromisso.registraAviso(aviso);
+        atual.setTime(System.currentTimeMillis());
+        timer.schedule(aviso, compromisso.getData().getTime() - atual.getTime() - 1000*ant, period*1000);
     }
     
     public void cancela(Compromisso compromisso) {
-        timer.cancel();
+        for(Aviso avisoAtual: compromisso.getAvisos()){
+            if(avisoAtual != null) 
+                avisoAtual.cancel();
+        }
+        if(compromissos.contains(compromisso))
+            compromissos.remove(compromisso);
     }
     
     public void cancela(Aviso aviso) {
-        timer.cancel();
+        if(aviso != null) 
+            aviso.cancel();
+         aviso.compromisso.getAvisos().remove(aviso);
     }
     
     public void destroi() {
-        timer.purge();
+        for(Compromisso compromisso: compromissos){
+                for(Aviso ultimo: compromisso.getAvisos()){
+                    if(ultimo!=null)
+                        ultimo.cancel();
+                }
+        }
+        timer.cancel();
     }
 }
