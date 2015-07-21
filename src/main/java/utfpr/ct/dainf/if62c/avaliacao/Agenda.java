@@ -3,6 +3,7 @@ package utfpr.ct.dainf.if62c.avaliacao;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
+import java.util.Date;
 
 /**
  * IF62C Fundamentos de Programação 2
