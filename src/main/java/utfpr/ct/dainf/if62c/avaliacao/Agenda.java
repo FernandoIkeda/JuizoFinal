@@ -1,21 +1,22 @@
 package utfpr.ct.dainf.if62c.avaliacao;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Timer;
-import java.util.Date;
 
 /**
  * IF62C Fundamentos de Programação 2
  * Avaliação parcial 4.
  * @author Fernando
  */
+
 public class Agenda {
     private final String descricao;
     private final List<Compromisso> compromissos = new ArrayList<>();
     private final Timer timer;
     private final Date atual = new Date();
-
+    
     public Agenda(String descricao) {
         this.descricao = descricao;
         timer = new Timer(descricao);
@@ -47,8 +48,7 @@ public class Agenda {
         Aviso aviso = new Aviso(compromisso);
         compromisso.registraAviso(aviso);
         atual.setTime(System.currentTimeMillis());
-        timer.schedule(aviso, compromisso.getData().getTime() - atual.getTime()
-                       - 1000*antecedencia, intervalo*1000);
+        timer.schedule(aviso, compromisso.getData().getTime() - atual.getTime() - 1000*antecedencia, intervalo*1000);
     }
     
     public void cancela(Compromisso compromisso) {
@@ -63,7 +63,7 @@ public class Agenda {
     public void cancela(Aviso aviso) {
         if(aviso != null) 
             aviso.cancel();
-         aviso.compromisso.getAvisos().remove(aviso);
+        aviso.compromisso.getAvisos().remove(aviso);
     }
     
     public void destroi() {
@@ -73,6 +73,6 @@ public class Agenda {
                         ultimo.cancel();
                 }
         }
-        timer.cancel();
+    timer.cancel();
     }
 }
